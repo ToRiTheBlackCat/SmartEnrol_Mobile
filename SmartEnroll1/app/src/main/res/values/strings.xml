@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">SmartEnroll1</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="HomePages">
+        <item>Trang chủ</item>
+        <item>Tài liệu</item>
+        <item>Tin tức</item>
+        <item>Hướng nghiệp</item>
+        <item>Về chúng tôi</item>
+    </string-array>
+</resources>
