@@ -32,10 +32,10 @@
 
                 <ImageView
                     android:id="@+id/imageView2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:padding="12dp"
-                    app:srcCompat="@drawable/ic_account" />
+                    android:layout_marginLeft="10dp"
+                    app:srcCompat="@drawable/ic_smartenroll" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -78,6 +78,7 @@
                     android:layout_marginTop="508dp"
                     android:layout_marginEnd="28dp"
                     android:background="@drawable/corner_rounded"
+                    android:backgroundTint="#FD8C75"
                     android:padding="10dp"
                     android:text="Sử dụng AI để đánh giá số điểm các môn học, từ đó đề xuất cho học sinh những trường đại học phù hợp"
                     android:textAlignment="viewStart"
@@ -120,6 +121,7 @@
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="336dp"
                     android:background="@drawable/corner_rounded"
+                    android:backgroundTint="#FD8C75"
                     android:padding="10dp"
                     android:text="Nắm bắt rõ quy chế tuyển sinh của từng trường đại học tại Việt Nam"
                     android:textAlignment="viewStart"
@@ -162,6 +164,7 @@
                     android:layout_marginTop="68dp"
                     android:layout_marginEnd="32dp"
                     android:background="@drawable/corner_rounded"
+                    android:backgroundTint="#FD8C75"
                     android:padding="10dp"
                     android:text="Tuyển sinh chatbot cung cấp công cụ trợ giúp toàn diện, giúp cho học sinh tiếp cận các phương thức tuyển sinh mới nhất của các trường đại học"
                     android:textAlignment="viewStart"
