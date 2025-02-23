@@ -1,12 +1,24 @@
 package com.example.smartenroll1
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.core.widget.doOnTextChanged
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.smartenroll1.databinding.ActivityMainBinding
 import com.example.smartenroll1.databinding.FragmentHomeBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.math.log
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,6 +40,7 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        getAllComments()
         val pages = resources.getStringArray(R.array.HomePages)
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, pages)
         binding.acvPageSelectHome.setText(pages[0])
@@ -43,8 +56,61 @@ class HomeFragment : Fragment() {
         }
 
         binding = FragmentHomeBinding.inflate(layoutInflater)
+        binding.acvPageSelectHome.setOnItemClickListener { parent, view, position, id ->
+            HomePageChange(binding.acvPageSelectHome.text.toString())
+        }
 
 
+    }
+
+    private fun HomePageChange(pageText: String?) {
+        if (pageText == null)
+            return
+
+        val pageStrings = resources.getStringArray(R.array.HomePages)
+        val selectedPage = when (pageText) {
+            pageStrings[0] -> R.id.homeFragment
+            pageStrings[1] -> R.id.chatFragment
+            pageStrings[2] -> R.id.accountFragment
+            pageStrings[3] -> R.id.homeFragment
+            pageStrings[4] -> R.id.accountFragment
+
+            else -> return
+        }
+        val navController = findNavController()
+        navController.navigate(selectedPage)
+    }
+
+
+    private val BASE_URL = "https://jsonplaceholder.typicode.com"
+    private val TAG: String = "CHECK_RESPONSE"
+
+    private fun getAllComments() {
+        val api = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(SmartEnrolApi::class.java)
+
+        val apiTest = api.getComments().enqueue(object : Callback<List<Comments>> {
+            override fun onResponse(
+                call: Call<List<Comments>>,
+                response: Response<List<Comments>>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        for (comment in it) {
+                            Log.i(TAG, "On response: ${comment.body}")
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Comments>>, throwable: Throwable) {
+                val test = throwable
+            }
+
+        })
     }
 
     override fun onCreateView(
@@ -52,10 +118,9 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-
         return binding.root
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_home, binding.root, false)
+        // return inflater.inflate(R.layout.fragment_home, binding.root, false)
     }
 
     companion object {

@@ -52,7 +52,7 @@
                         android:backgroundTintMode="src_over"
                         android:dropDownHeight="wrap_content"
                         android:inputType="none"
-                        android:text="@s"
+                        android:text="@string/app_name"
                         android:textSize="14sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -135,8 +135,8 @@
                     android:id="@+id/imageView7"
                     android:layout_width="93dp"
                     android:layout_height="104dp"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginTop="100dp"
+                    android:layout_marginStart="56dp"
+                    android:layout_marginTop="92dp"
                     android:background="@drawable/corner_rounded"
                     android:backgroundTint="#E0E0E0"
                     android:padding="10dp"

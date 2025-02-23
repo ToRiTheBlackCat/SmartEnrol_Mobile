@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "848471552565",
+    "project_id": "fir-pushnotification-f6ac4",
+    "storage_bucket": "fir-pushnotification-f6ac4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:848471552565:android:64c3cd025067e02483f77c",
+        "android_client_info": {
+          "package_name": "com.example.smartenroll1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTRy1-0PtRYILlUSaeTSKJAEIYLee0ZcA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
