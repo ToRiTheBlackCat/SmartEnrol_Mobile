@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_rowWeight="1"
+    tools:context=".HomeFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llHomeHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFD8B3"
+                android:orientation="horizontal"
+                android:paddingTop="12dp"
+                android:paddingEnd="7dp"
+                android:paddingBottom="13dp">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_marginLeft="10dp"
+                    app:srcCompat="@drawable/ic_smartenroll" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginLeft="74dp">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acvPageSelectHome"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:backgroundTint="#D0A671"
+                        android:backgroundTintMode="src_over"
+                        android:dropDownHeight="wrap_content"
+                        android:inputType="none"
+                        android:text="@string/app_name"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/svInner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="156dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="508dp"
+                    android:layout_marginEnd="28dp"
+                    android:background="@drawable/corner_rounded"
+                    android:backgroundTint="#FD8C75"
+                    android:padding="10dp"
+                    android:text="Sử dụng AI để đánh giá số điểm các môn học, từ đó đề xuất cho học sinh những trường đại học phù hợp"
+                    android:textAlignment="viewStart"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintCircleRadius="100dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="112dp"
+                    android:layout_height="96dp"
+                    android:layout_marginTop="108dp"
+                    android:layout_marginEnd="59dp"
+                    android:background="@drawable/corner_rounded"
+                    android:backgroundTint="#E0E0E0"
+                    android:padding="10dp"
+                    android:src="@drawable/__medical_neural_network"
+                    app:layout_constraintEnd_toStartOf="@+id/textView5"
+                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="112dp"
+                    android:layout_height="96dp"
+                    android:layout_marginTop="122dp"
+                    android:layout_marginEnd="59dp"
+                    android:background="@drawable/corner_rounded"
+                    android:backgroundTint="#E0E0E0"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_file"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="154dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="336dp"
+                    android:background="@drawable/corner_rounded"
+                    android:backgroundTint="#FD8C75"
+                    android:padding="10dp"
+                    android:text="Nắm bắt rõ quy chế tuyển sinh của từng trường đại học tại Việt Nam"
+                    android:textAlignment="viewStart"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintCircleRadius="100dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="93dp"
+                    android:layout_height="104dp"
+                    android:layout_marginStart="56dp"
+                    android:layout_marginTop="92dp"
+                    android:background="@drawable/corner_rounded"
+                    android:backgroundTint="#E0E0E0"
+                    android:padding="10dp"
+                    android:src="@drawable/__medical_neural_network"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Chúng tôi có gì"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.501"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="167dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="68dp"
+                    android:layout_marginEnd="32dp"
+                    android:background="@drawable/corner_rounded"
+                    android:backgroundTint="#FD8C75"
+                    android:padding="10dp"
+                    android:text="Tuyển sinh chatbot cung cấp công cụ trợ giúp toàn diện, giúp cho học sinh tiếp cận các phương thức tuyển sinh mới nhất của các trường đại học"
+                    android:textAlignment="viewStart"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintCircleRadius="100dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</FrameLayout>
