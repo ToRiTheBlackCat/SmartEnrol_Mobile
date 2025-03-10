@@ -71,9 +71,9 @@ class HomeFragment : Fragment() {
         val selectedPage = when (pageText) {
             pageStrings[0] -> R.id.homeFragment
             pageStrings[1] -> R.id.chatFragment
-            pageStrings[2] -> R.id.accountFragment
+            pageStrings[2] -> R.id.infoFragment
             pageStrings[3] -> R.id.homeFragment
-            pageStrings[4] -> R.id.accountFragment
+            pageStrings[4] -> R.id.infoFragment
 
             else -> return
         }
@@ -108,8 +108,8 @@ class HomeFragment : Fragment() {
 
             override fun onFailure(call: Call<List<Comments>>, throwable: Throwable) {
                 val test = throwable
+                Log.i(TAG, "On response: ${throwable.stackTrace}")
             }
-
         })
     }
 
