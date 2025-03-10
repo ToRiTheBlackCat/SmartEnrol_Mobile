@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/miDash"
+        android:icon="@drawable/analytics_ic"
+        android:title="Dashboard" />
+    <item
         android:id="@+id/miHome"
         android:icon="@drawable/ic_home"
         android:title="Home" />
     <item
         android:id="@+id/miChat"
-        android:icon="@drawable/ic_chat"
+        android:icon="@drawable/analytics_ic"
         android:title="Chat" />
-    <item
-        android:id="@+id/miAccount"
-        android:icon="@drawable/ic_account"
-        android:title="Account" />
 </menu>

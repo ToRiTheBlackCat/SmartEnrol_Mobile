@@ -9,10 +9,10 @@
         android:id="@+id/homeFragment"
         android:name="com.example.smartenroll1.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_accountFragment"
-            app:destination="@id/accountFragment"
+            app:destination="@id/infoFragment"
             app:enterAnim="@animator/nav_default_enter_anim" />
     </fragment>
     <fragment
@@ -21,8 +21,19 @@
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" />
     <fragment
-        android:id="@+id/accountFragment"
-        android:name="com.example.smartenroll1.AccountFragment"
-        android:label="fragment_account"
+        android:id="@+id/infoFragment"
+        android:name="com.example.smartenroll1.MainScreens.AccountListFragment"
+        android:label="account_info_list"
         tools:layout="@layout/fragment_account" />
+    <fragment
+        android:id="@+id/accountInfoDetail"
+        android:name="com.example.smartenroll1.AccountInfoDetail"
+        android:label="fragment_account_info_detail"
+        tools:layout="@layout/fragment_account_info_detail" >
+        <action
+            android:id="@+id/accountListToDetail"
+            app:destination="@id/infoFragment"
+            app:enterAnim="@anim/nav_default_pop_enter_anim"
+            app:exitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
 </navigation>

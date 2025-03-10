@@ -1,27 +1,23 @@
 package com.example.smartenroll1
 
+import android.content.pm.PackageManager
+import android.Manifest
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.smartenroll1.databinding.ActivityMainBinding
-import com.example.smartenroll1.databinding.FragmentHomeBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
-import java.io.IOException
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -29,24 +25,26 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        enableEdgeToEdge()
+        enableEdgeToEdge()
 
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-//            insets
-//        }
+        requestNotificationPermission()
+        subScribeToTopic()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
         setContentView(binding.root)
 
         val firstFragment = HomeFragment()
         val secondFragment = ChatFragment()
-        val thirdFragment = AccountFragment()
+//        val thirdFragment = AccountFragment()
 
-        val test = supportFragmentManager
+        val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nvfFragment) as NavHostFragment
-        navController = test.findNavController()
+        navController = navHostFragment.findNavController()
 
         setCurrentFragment(R.id.homeFragment)
 
@@ -54,7 +52,8 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.miHome -> setCurrentFragment(R.id.homeFragment)
                 R.id.miChat -> setCurrentFragment(R.id.chatFragment)
-                R.id.miAccount -> setCurrentFragment(R.id.accountFragment)
+//                R.id.miAccount -> setCurrentFragment(R.id.accountFragment)
+                R.id.miDash -> setCurrentFragment(R.id.infoFragment)
             }
             true
         }
@@ -67,12 +66,32 @@ class MainActivity : AppCompatActivity() {
 
 
 
-//    private fun setCurrentFragment(fragment: Fragment){
-////        supportFragmentManager.beginTransaction().apply {
-////            replace(R.id.nvfFragment, fragment)
-////            commit()
-////        }
-//
-//        navController.navigate(R.id.action_homeFragment_to_accountFragment)
-//    }
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val hasPermit = ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+
+            if (!hasPermit) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    0
+                )
+            }
+        }
+    }
+
+    private fun subScribeToTopic() {
+        Firebase.messaging.subscribeToTopic("Registration")
+            .addOnCompleteListener { task ->
+                var msg = "Subscribed"
+                if (!task.isSuccessful) {
+                    msg = "Subscribe failed"
+                }
+                Log.i("SUBSCRIBE", msg)
+                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+            }
+    }
 }
