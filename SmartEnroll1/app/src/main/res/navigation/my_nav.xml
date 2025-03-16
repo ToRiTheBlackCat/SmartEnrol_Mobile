@@ -24,7 +24,7 @@
         android:id="@+id/infoFragment"
         android:name="com.example.smartenroll1.MainScreens.AccountListFragment"
         android:label="account_info_list"
-        tools:layout="@layout/fragment_account" />
+        tools:layout="@layout/fragment_info" />
     <fragment
         android:id="@+id/accountInfoDetail"
         android:name="com.example.smartenroll1.AccountInfoDetail"
@@ -36,4 +36,9 @@
             app:enterAnim="@anim/nav_default_pop_enter_anim"
             app:exitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
+    <fragment
+        android:id="@+id/accountManagement"
+        android:name="com.example.smartenroll1.AccountManagement"
+        android:label="fragment_account_management"
+        tools:layout="@layout/fragment_account_management" />
 </navigation>

@@ -1,6 +1,7 @@
 package com.example.smartenroll1
 
 import com.example.smartenroll1.MainScreens.Models.AccountItemModel
+import com.example.smartenroll1.MainScreens.Models.GetAccountModel
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -8,6 +9,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 class SmartEnrolCaller {
     companion object {
@@ -46,4 +48,11 @@ interface SmartEnrolApi {
 
     @GET("Account")
     fun getAllAccount(): Call<List<AccountItemModel>>
+
+    @GET("Account/{accountId}")
+    fun getAccountById(@Path("accountId") accountId: Int): Call<GetAccountModel>
+
+    @GET("Account/get-month/{month}")
+    fun getAccountsByMonth(@Path("month") month: Int): Call<List<AccountItemModel>>
 }
+

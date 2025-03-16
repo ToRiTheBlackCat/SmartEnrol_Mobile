@@ -7,10 +7,10 @@
         android:title="Dashboard" />
     <item
         android:id="@+id/miHome"
-        android:icon="@drawable/ic_home"
-        android:title="Home" />
-    <item
-        android:id="@+id/miChat"
-        android:icon="@drawable/analytics_ic"
-        android:title="Chat" />
+        android:icon="@drawable/ic_account"
+        android:title="Accounts" />
+<!--    <item-->
+<!--        android:id="@+id/miChat"-->
+<!--        android:icon="@drawable/analytics_ic"-->
+<!--        android:title="Chat" />-->
 </menu>

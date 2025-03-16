@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.smartenroll1.MainScreens.Models.AccountListViewModel
-import com.example.smartenroll1.databinding.FragmentAccountBinding
+import com.example.smartenroll1.databinding.FragmentInfoBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -21,12 +21,12 @@ import kotlinx.coroutines.launch
  */
 class AccountListFragment : Fragment() {
     private var columnCount = 1
-    private lateinit var binding: FragmentAccountBinding
+    private lateinit var binding: FragmentInfoBinding
     private val viewModel: AccountListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = FragmentAccountBinding.inflate(layoutInflater)
+        binding = FragmentInfoBinding.inflate(layoutInflater)
 
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
@@ -38,9 +38,15 @@ class AccountListFragment : Fragment() {
         val fragmentContext = this
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-
-                viewModel.listAccount.collectLatest {
-                    recycler.adapter = MyItemRecyclerViewAdapter(it, findNavController(), fragmentContext)
+                launch {
+                    viewModel.monthCount.collectLatest {
+                        binding.monthCount.text = "${it}"
+                    }
+                }
+                launch {
+                    viewModel.listAccount.collectLatest {
+                        recycler.adapter = MyItemRecyclerViewAdapter(it, findNavController())
+                    }
                 }
             }
         }

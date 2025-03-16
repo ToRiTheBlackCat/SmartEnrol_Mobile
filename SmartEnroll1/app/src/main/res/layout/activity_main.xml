@@ -17,7 +17,7 @@
         android:layout_weight="1"
         app:defaultNavHost="true"
         app:navGraph="@navigation/my_nav"
-        tools:layout="@layout/fragment_account" />
+        tools:layout="@layout/fragment_info" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import com.example.smartenroll1.MainScreens.Models.AccountItemModel
 
@@ -18,7 +19,7 @@ import java.util.Locale
 class MyItemRecyclerViewAdapter(
     private val values: List<AccountItemModel>,
     private val navController: NavController,
-    private val fragmentContext: AccountListFragment
+//    private val fragmentContext: Context
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.AccountInfoHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountInfoHolder {
