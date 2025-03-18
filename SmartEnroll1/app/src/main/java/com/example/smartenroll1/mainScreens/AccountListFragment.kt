@@ -1,4 +1,4 @@
-package com.example.smartenroll1.MainScreens
+package com.example.smartenroll1.mainScreens
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,7 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.smartenroll1.MainScreens.Models.AccountListViewModel
+import com.example.smartenroll1.mainScreens.Models.AccountListViewModel
 import com.example.smartenroll1.databinding.FragmentInfoBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -32,6 +32,8 @@ class AccountListFragment : Fragment() {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
 
+        viewModel.isSearchPage.value = true
+
         val recycler = binding.rvAccountList
         recycler.layoutManager = LinearLayoutManager(requireContext())
 
@@ -40,7 +42,7 @@ class AccountListFragment : Fragment() {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.monthCount.collectLatest {
-                        binding.monthCount.text = "${it}"
+                        binding.tvMonthCount.text = "${it}"
                     }
                 }
                 launch {

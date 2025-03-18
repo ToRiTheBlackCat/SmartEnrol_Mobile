@@ -9,9 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
-import com.example.smartenroll1.MainScreens.Models.AccountDetailViewModel
-import com.example.smartenroll1.MainScreens.Models.AccountListViewModel
+import com.example.smartenroll1.mainScreens.Models.AccountDetailViewModel
 import com.example.smartenroll1.databinding.FragmentAccountInfoDetailBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -53,7 +51,7 @@ class AccountInfoDetail : Fragment() {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.account.collectLatest {
                     binding.tvId.text = it?.accountId.toString()
-                    binding.tvUsername.text = it?.accountName.toString()
+                    binding.tvAccountName.text = it?.accountName.toString()
                     binding.tvEmail.text = it?.email.toString()
                     binding.tvArea.text = it?.areaName
 //                    binding.tvJoinDate.text = it?.createdDate.toString()

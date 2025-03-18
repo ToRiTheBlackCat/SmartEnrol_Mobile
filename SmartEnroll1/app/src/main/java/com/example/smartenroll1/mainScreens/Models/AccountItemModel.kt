@@ -1,4 +1,4 @@
-package com.example.smartenroll1.MainScreens.Models
+package com.example.smartenroll1.mainScreens.Models
 
 
 data class AccountItemModel(

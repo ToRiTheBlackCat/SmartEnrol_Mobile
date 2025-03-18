@@ -46,14 +46,14 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nvfFragment) as NavHostFragment
         navController = navHostFragment.findNavController()
 
-        setCurrentFragment(R.id.infoFragment)
+//        setCurrentFragment(R.id.infoFragment)
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
 //                R.id.miHome -> setCurrentFragment(R.id.homeFragment)
-                R.id.miHome -> setCurrentFragment(R.id.accountManagement)
+                R.id.miHome -> setCurrentFragment(R.id.accountManagementNav)
 //                R.id.miChat -> setCurrentFragment(R.id.chatFragment)
-                R.id.miDash -> setCurrentFragment(R.id.infoFragment)
+                R.id.miDash -> setCurrentFragment(R.id.infoFragmentNav)
             }
             true
         }

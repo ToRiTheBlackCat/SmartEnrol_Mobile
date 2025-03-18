@@ -1,6 +1,5 @@
-package com.example.smartenroll1.MainScreens
+package com.example.smartenroll1.mainScreens
 
-import android.content.Context
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -8,9 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import com.example.smartenroll1.MainScreens.Models.AccountItemModel
+import com.example.smartenroll1.mainScreens.Models.AccountItemModel
 
 import com.example.smartenroll1.R
 import com.example.smartenroll1.databinding.AccountInfoBinding

@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout3"
+    android:id="@+id/infoFragmentNav"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainScreens.AccountListFragment">
+    tools:context=".mainScreens.AccountListFragment"
+    android:name="com.example.smartenroll1.mainScreens.AccountListFragment">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -63,11 +64,11 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView3"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/monthCount"
+                app:layout_constraintStart_toEndOf="@+id/tvMonthCount"
                 app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
             <TextView
-                android:id="@+id/monthCount"
+                android:id="@+id/tvMonthCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"

@@ -5,16 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.smartenroll1.MainScreens.Models.AccountListViewModel
-import com.example.smartenroll1.MainScreens.MyItemRecyclerViewAdapter
+import com.example.smartenroll1.mainScreens.Models.AccountListViewModel
+import com.example.smartenroll1.mainScreens.MyItemRecyclerViewAdapter
 import com.example.smartenroll1.databinding.FragmentAccountManagementBinding
-import com.example.smartenroll1.databinding.FragmentInfoBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -42,6 +42,18 @@ class AccountManagement : Fragment() {
 
         val recycler = binding.rvAccountList
         recycler.layoutManager = LinearLayoutManager(requireContext())
+
+        // Search
+        binding.etFilterName.setText(viewModel.filterName.value)
+        val searchBtn = binding.btnSearch
+        searchBtn.setOnClickListener {
+            viewModel.onSearch(binding.etFilterName.text.toString())
+        }
+
+        val pages = Array(6) { (it + 1).toString() }
+        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, pages)
+        binding.acvPageSelect.setText("1")
+        binding.acvPageSelect.setAdapter(arrayAdapter)
 
         val fragmentContext = this
 
