@@ -52,8 +52,13 @@ class AccountManagement : Fragment() {
 
         val pages = Array(6) { (it + 1).toString() }
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, pages)
-        binding.acvPageSelect.setText("1")
-        binding.acvPageSelect.setAdapter(arrayAdapter)
+        val pageSelect = binding.acvPageSelect
+        pageSelect.setText("1")
+        pageSelect.setAdapter(arrayAdapter)
+        pageSelect.setOnItemClickListener { parent, view, position, id ->
+            val pageNumber = pageSelect.text.toString().toIntOrNull() ?: 1
+            viewModel.onSearch(binding.etFilterName.text.toString(), pageNumber)
+        }
 
         val fragmentContext = this
 

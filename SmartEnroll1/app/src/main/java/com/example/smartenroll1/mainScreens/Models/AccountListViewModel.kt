@@ -27,6 +27,14 @@ class AccountListViewModel : ViewModel() {
     // Search params
     private val _filterName = MutableStateFlow("")
     val filterName = _filterName.asStateFlow()
+    private val _pageNumber = MutableStateFlow(1)
+    val pageNumber = _pageNumber.asStateFlow()
+    private val _pageSize = MutableStateFlow(10)
+    val pageSize = _pageNumber.asStateFlow()
+
+    private val _pageCount = MutableStateFlow(0)
+    val pageCount = _pageNumber.asStateFlow()
+
 
     init {
         startPolling()
@@ -102,12 +110,15 @@ class AccountListViewModel : ViewModel() {
             })
     }
 
-    public fun onSearch(name: String) {
+    public fun onSearch(name: String, pageNumber: Int = 1) {
         _filterName.value = name
+        _pageNumber.value = pageNumber
 
         fetchDataFromServer(
             sortByNewestDate = isSearchPage.value,
-            name = filterName.value
+            name = filterName.value,
+            pageNumber = _pageNumber.value,
+            pageSize = _pageSize.value
         ) { accounts ->
             _listAccount.value = accounts
         }

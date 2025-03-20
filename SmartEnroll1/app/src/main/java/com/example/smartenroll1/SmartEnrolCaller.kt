@@ -15,7 +15,7 @@ import retrofit2.http.Query
 class SmartEnrolCaller {
     companion object {
         private val BASE_URL = "https://smartenrol2.azurewebsites.net/api/"
-        val TAG: String = "GET_ACCOUNT"
+        val TAG: String = "SMARTENROLL_API"
 
         fun getApi(): SmartEnrolApi {
             val api = Retrofit

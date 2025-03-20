@@ -14,7 +14,7 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="8"
         app:defaultNavHost="true"
         app:navGraph="@navigation/my_nav"
         tools:layout="@layout/fragment_info" />
@@ -22,8 +22,10 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#DCDCDC"
+        app:itemTextColor="#070707"
         app:menu="@menu/bottom_navigation" />
 
 </LinearLayout>
