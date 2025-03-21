@@ -50,10 +50,10 @@ class AccountManagement : Fragment() {
             viewModel.onSearch(binding.etFilterName.text.toString())
         }
 
-        val pages = Array(6) { (it + 1).toString() }
+        val pages = Array(viewModel.pageCount.value) { (it + 1).toString() }
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, pages)
         val pageSelect = binding.acvPageSelect
-        pageSelect.setText("1")
+        pageSelect.setText("${viewModel.pageNumber.value}")
         pageSelect.setAdapter(arrayAdapter)
         pageSelect.setOnItemClickListener { parent, view, position, id ->
             val pageNumber = pageSelect.text.toString().toIntOrNull() ?: 1

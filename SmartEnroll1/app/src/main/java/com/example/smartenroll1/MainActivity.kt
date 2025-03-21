@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nvfFragment) as NavHostFragment
         navController = navHostFragment.findNavController()
 
-//        setCurrentFragment(R.id.infoFragment)
+        setCurrentFragment(R.id.infoFragmentNav)
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {

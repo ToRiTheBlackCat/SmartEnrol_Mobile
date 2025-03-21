@@ -1,10 +1,6 @@
 package com.example.smartenroll1.mainScreens.Models
 
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import android.widget.Toast
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.smartenroll1.PaginatedAccountList
@@ -16,6 +12,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.ceil
 
 class AccountListViewModel : ViewModel() {
     private val _listAccount = MutableStateFlow<List<AccountItemModel>>(emptyList())
@@ -45,10 +42,14 @@ class AccountListViewModel : ViewModel() {
             while (true) {
                 fetchDataFromServer(
                     sortByNewestDate = isSearchPage.value,
-                    name = filterName.value
-                ) { accounts ->
-                    _listAccount.value = accounts
-                }
+                    name = filterName.value,
+                    accounts = { accounts ->
+                        _listAccount.value = accounts
+                    },
+                    pageCount = { totalPages ->
+                        _pageCount.value = totalPages
+                    }
+                )
 
                 getMonthlyRegistration { count ->
                     _registeredInMonth.value = count
@@ -61,7 +62,8 @@ class AccountListViewModel : ViewModel() {
     private fun fetchDataFromServer(
         name: String = "", sortByNewestDate: Boolean = false,
         pageSize: Int = 10, pageNumber: Int = 1,
-        accounts: (List<AccountItemModel>) -> Unit
+        accounts: (List<AccountItemModel>) -> Unit,
+        pageCount: (Int) -> Unit
     ) {
         val api = SmartEnrolCaller.getApi()
 
@@ -72,8 +74,9 @@ class AccountListViewModel : ViewModel() {
                 ) {
                     if (response.isSuccessful) {
                         response.body()?.let {
-                            accounts(it.courses)
-                            for (account in it.courses) {
+                            accounts(it.accounts)
+                            pageCount(ceil((it.totalCounts / pageSize * 1f)).toInt())
+                            for (account in it.accounts) {
                                 Log.i(SmartEnrolCaller.TAG, "On response: ${account.accountName}")
                             }
                         }
@@ -118,9 +121,13 @@ class AccountListViewModel : ViewModel() {
             sortByNewestDate = isSearchPage.value,
             name = filterName.value,
             pageNumber = _pageNumber.value,
-            pageSize = _pageSize.value
-        ) { accounts ->
-            _listAccount.value = accounts
-        }
+            pageSize = _pageSize.value,
+            accounts = { accounts ->
+                _listAccount.value = accounts
+            },
+            pageCount = { totalPages ->
+                _pageCount.value = totalPages
+            }
+        )
     }
 }

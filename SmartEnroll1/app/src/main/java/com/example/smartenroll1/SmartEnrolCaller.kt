@@ -15,7 +15,7 @@ import retrofit2.http.Query
 class SmartEnrolCaller {
     companion object {
         private val BASE_URL = "https://smartenrol2.azurewebsites.net/api/"
-        val TAG: String = "SMARTENROLL_API"
+        const val TAG: String = "SMARTENROLL_API"
 
         fun getApi(): SmartEnrolApi {
             val api = Retrofit
@@ -47,7 +47,7 @@ interface SmartEnrolApi {
 //    @POST("/broadcast")
 //    suspend fun broadcastMessage(@Body body: SendMessageDto)
 
-    @GET("Account")
+    @GET("Account/paged")
     fun getAccountList(
         @Query("name") name: String = "",
         @Query("sortByNewestDate") sortNewestDate: Boolean = false,
@@ -66,6 +66,6 @@ data class PaginatedAccountList(
     val totalCounts: Int,
     val pageNumber: Int,
     val pageSize: Int,
-    val courses: List<AccountItemModel>
+    val accounts: List<AccountItemModel>
 )
 
