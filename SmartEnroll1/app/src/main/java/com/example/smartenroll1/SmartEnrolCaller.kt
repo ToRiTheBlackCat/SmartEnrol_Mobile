@@ -2,7 +2,9 @@ package com.example.smartenroll1
 
 import com.example.smartenroll1.mainScreens.Models.AccountItemModel
 import com.example.smartenroll1.mainScreens.Models.GetAccountModel
+import io.reactivex.Single
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
@@ -60,6 +62,17 @@ interface SmartEnrolApi {
 
     @GET("Account/get-month/{month}")
     fun getAccountsByMonth(@Path("month") month: Int): Call<List<AccountItemModel>>
+
+    @GET("Account/get-month/{month}")
+    suspend fun getByMonthSimple(@Path("month") month: Int): List<AccountItemModel>
+
+    @GET("Account/paged")
+    suspend fun getAccountListSuspend(
+        @Query("name") name: String = "",
+        @Query("sortByNewestDate") sortNewestDate: Boolean = false,
+        @Query("pageSize") pageSize: Int = 10,
+        @Query("pageNumber") pageNumber: Int = 1
+    ): Response<PaginatedAccountList>
 }
 
 data class PaginatedAccountList(

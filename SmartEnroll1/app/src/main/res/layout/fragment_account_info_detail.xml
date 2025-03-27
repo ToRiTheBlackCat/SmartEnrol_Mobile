@@ -26,6 +26,7 @@
                 android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:backgroundTint="#D3D3D3"
                 android:contentDescription="Back"
                 android:src="@drawable/ic_exit" />
 
@@ -45,7 +46,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="32dp"
             android:text="User Id:"
-            android:textSize="22sp"
+            android:textColor="#000000"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailBanner" />
@@ -56,7 +58,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="12"
-            android:textSize="22sp"
+            android:textColor="#000000"
+            android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/textView7"
             app:layout_constraintTop_toTopOf="@+id/textView7" />
 
@@ -66,7 +69,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="Username:"
-            android:textSize="22sp"
+            android:textColor="#000000"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textView7"
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
@@ -78,7 +82,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="24dp"
             android:text="Nguyen Huynh Minh Tri"
-            android:textSize="22sp"
+            android:textColor="#000000"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView9"
             app:layout_constraintTop_toTopOf="@+id/textView9" />
@@ -89,7 +94,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="Email:"
-            android:textSize="22sp"
+            android:textColor="#000000"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textView9"
             app:layout_constraintTop_toBottomOf="@+id/tvAccountName" />
@@ -101,7 +107,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="24dp"
             android:text="seniorflexoffice@gmail.com"
-            android:textSize="22sp"
+            android:textAlignment="viewStart"
+            android:textColor="#000000"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView12"
             app:layout_constraintTop_toTopOf="@+id/textView12" />
@@ -112,7 +120,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="Area:"
-            android:textSize="22sp"
+            android:textColor="#000000"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textView12"
             app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
@@ -123,7 +132,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="Ho Chi Minh"
-            android:textSize="22sp"
+            android:textColor="#000000"
+            android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/textView13"
             app:layout_constraintTop_toTopOf="@+id/textView13" />
 <!--        <TextView-->

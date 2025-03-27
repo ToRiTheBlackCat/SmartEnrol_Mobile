@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".AccountManagement">
 
     <androidx.cardview.widget.CardView
@@ -12,12 +13,12 @@
         android:layout_height="wrap_content"
         android:elevation="16dp"
         app:cardBackgroundColor="#EF9A40"
-        app:cardCornerRadius="16dp">
+        app:cardCornerRadius="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp">
+            android:paddingBottom="4dp">
 
             <TextView
                 android:id="@+id/textView6"
@@ -57,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Username"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView3"
                 app:layout_constraintStart_toEndOf="@+id/imageView3"
@@ -67,9 +68,8 @@
                 android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:text="Email"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView4"
                 app:layout_constraintEnd_toEndOf="@+id/tvMonthCount"
@@ -80,14 +80,14 @@
                 style="@style/Widget.AppCompat.AutoCompleteTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginEnd="32dp"
                 android:backgroundTint="#FFFFFF"
                 android:ems="10"
                 android:hint="Input Username"
                 android:inputType="text"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvMonthCount"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tvMonthCount"
@@ -99,14 +99,14 @@
                 style="@style/Widget.AppCompat.AutoCompleteTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginEnd="32dp"
                 android:backgroundTint="#FFFFFF"
                 android:ems="10"
                 android:hint="Input Email"
                 android:inputType="text"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvEmail"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tvEmail"
@@ -126,6 +126,7 @@
                 android:textAllCaps="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="#FFFFFF"
+                android:textSize="16sp"
                 app:cornerRadius="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -142,7 +143,7 @@
                 <AutoCompleteTextView
                     android:id="@+id/acvPageSelect"
                     android:layout_width="81dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:backgroundTint="#BCBCBC"
                     android:backgroundTintMode="src_over"
                     android:dropDownWidth="wrap_content"
@@ -150,6 +151,7 @@
                     android:inputType="none"
                     android:padding="10dp"
                     android:text="1"
+                    android:textColor="#000000"
                     android:textSize="12sp" />
 
             </com.google.android.material.textfield.TextInputLayout>

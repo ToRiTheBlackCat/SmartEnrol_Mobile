@@ -44,7 +44,6 @@ class AccountManagement : Fragment() {
         recycler.layoutManager = LinearLayoutManager(requireContext())
 
         // Search
-        binding.etFilterName.setText(viewModel.filterName.value)
         val searchBtn = binding.btnSearch
         searchBtn.setOnClickListener {
             viewModel.onSearch(binding.etFilterName.text.toString())
@@ -68,6 +67,16 @@ class AccountManagement : Fragment() {
                     viewModel.listAccount.collectLatest {
                         recycler.adapter =
                             MyItemRecyclerViewAdapter(it, findNavController())
+                    }
+                }
+                launch {
+                    viewModel.pageNumber.collectLatest {
+                        pageSelect.setText("${viewModel.pageNumber.value}")
+                    }
+                }
+                launch {
+                    viewModel.filterName.collectLatest {
+                        binding.etFilterName.setText(viewModel.filterName.value)
                     }
                 }
             }

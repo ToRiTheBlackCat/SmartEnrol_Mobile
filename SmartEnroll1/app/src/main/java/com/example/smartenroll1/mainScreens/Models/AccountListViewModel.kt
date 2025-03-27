@@ -11,8 +11,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalDateTime
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -49,39 +47,7 @@ class AccountListViewModel : ViewModel() {
     private fun startPolling() {
         viewModelScope.launch {
             while (true) {
-                fetchDataFromServer(
-                    sortByNewestDate = isSearchPage.value,
-                    name = filterName.value,
-                    accounts = { accounts ->
-                        _listAccount.value = accounts
-                    },
-                    pageCount = { totalPages ->
-                        _pageCount.value = totalPages
-                    }
-                )
-
-
-
-                if (isSearchPage.value != false) {
-                    // Get user registration count or previous 5 months
-                    val calendar = GregorianCalendar()
-                    val entries = ArrayList<BarEntry>()
-
-                    for (i in 0..4) {
-                        calendar.add(Calendar.MONTH, if (i > 0) -1 else 0)
-                        val tempMonth = calendar.get(Calendar.MONTH) + 1
-
-                        getMonthlyRegistration(tempMonth) { count ->
-                            if (i == 0) {
-                                _registeredInMonth.value = count
-                            }
-
-                            entries.add(BarEntry(i.toFloat(), count.toFloat(), tempMonth))
-                        }
-                    }
-
-                    _monthEntries.value = entries
-                }
+                fetchFromSeverFast()
 
                 delay(5000) // 🔄 Poll every 20 seconds
             }
@@ -118,61 +84,84 @@ class AccountListViewModel : ViewModel() {
             })
     }
 
-    private fun getMonthlyRegistration(month: Int, count: (Int) -> Unit) {
-        when (month) {
-            0 -> count(20)
-            1 -> count(20)
-            2 -> count(46)
-            3 -> count(15)
-            4 -> count(10)
-            5 -> count(25)
-            6 -> count(60)
-            7 -> count(60)
-            8 -> count(55)
-            9 -> count(33)
-            10 -> count(10)
-            11 -> count(0)
-            12 -> count(12)
+    fun fetchFromSeverFast() {
+        viewModelScope.launch {
+            try {
+                val api = SmartEnrolCaller.getApi()
+                val paginatedResult = api.getAccountListSuspend(
+                    sortNewestDate = isSearchPage.value,
+                    name = filterName.value,
+                    pageNumber = _pageNumber.value,
+                    pageSize = _pageSize.value,
+                )
+                if (paginatedResult.isSuccessful && paginatedResult.body() != null) {
+                    _listAccount.value = paginatedResult.body()!!.accounts
+                    _pageCount.value =
+                        ceil(_listAccount.value.count() / _pageSize.value * 1f).toInt()
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()  // Handle error
+            }
         }
-        return
+    }
 
-        val api = SmartEnrolCaller.getApi()
+    fun getChartData() {
+        try {
+            //Get user registration count or previous 5 months
+            viewModelScope.launch {
+                val entries = ArrayList<BarEntry>()
 
-        val response =
-            api.getAccountsByMonth(month).enqueue(object : Callback<List<AccountItemModel>> {
-                override fun onResponse(
-                    p0: Call<List<AccountItemModel>>,
-                    p1: Response<List<AccountItemModel>>
-                ) {
-                    if (p1.isSuccessful) {
-                        p1.body()?.let {
-                            count(it.count())
+                for (i in 4 downTo 0) {
+                    val calendar = GregorianCalendar()
+                    calendar.add(Calendar.MONTH, if (i > 0) -i else 0)
+                    val month = calendar.get(Calendar.MONTH) + 1
+
+                    val monthResult = SmartEnrolCaller.getApi().getByMonthSimple(month)
+
+                    if (monthResult.isNotEmpty()) {
+                        val monthCount = monthResult.count()
+
+                        if (i == 0) {
+                            _registeredInMonth.value = monthCount
                         }
+                        val temp = BarEntry(4f - i, (monthCount).toFloat(), month)
+                        entries.add(temp)
+                    } else {
+                        val temp = BarEntry(4f - i, 0f, month)
+                        entries.add(temp)
+//                        throw Exception("getByMonth api call failed at month ${tempMonth}")
                     }
                 }
 
-                override fun onFailure(p0: Call<List<AccountItemModel>>, p1: Throwable) {
-                    TODO("Not yet implemented")
-                }
-
-            })
+                _monthEntries.value = entries
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()  // Handle error
+        }
     }
 
-    public fun onSearch(name: String, pageNumber: Int = 1) {
+    fun onSearch(name: String, pageNumber: Int = 1) {
         _filterName.value = name
         _pageNumber.value = pageNumber
 
-        fetchDataFromServer(
-            sortByNewestDate = isSearchPage.value,
-            name = filterName.value,
-            pageNumber = _pageNumber.value,
-            pageSize = _pageSize.value,
-            accounts = { accounts ->
-                _listAccount.value = accounts
-            },
-            pageCount = { totalPages ->
-                _pageCount.value = totalPages
-            }
-        )
+        fetchFromSeverFast()
+//        fetchDataFromServer(
+//            sortByNewestDate = isSearchPage.value,
+//            name = filterName.value,
+//            pageNumber = _pageNumber.value,
+//            pageSize = _pageSize.value,
+//            accounts = { accounts ->
+//                _listAccount.value = accounts
+//            },
+//            pageCount = { totalPages ->
+//                _pageCount.value = totalPages
+//            }
+//        )
+    }
+
+
+    companion object {
+
     }
 }

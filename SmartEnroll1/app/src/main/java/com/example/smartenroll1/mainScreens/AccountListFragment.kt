@@ -1,27 +1,30 @@
 package com.example.smartenroll1.mainScreens
 
+import android.icu.text.DecimalFormat
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.smartenroll1.mainScreens.Models.AccountListViewModel
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.smartenroll1.databinding.FragmentInfoBinding
+import com.example.smartenroll1.mainScreens.Models.AccountListViewModel
+import com.example.smartenroll1.mainScreens.Singleton.NotificationRepository
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.util.ArrayList
+
 
 /**
  * A fragment representing a list of Items.
@@ -39,13 +42,20 @@ class AccountListFragment : Fragment() {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
 
-        viewModel.isSearchPage.value = true
+        viewModel.isSearchPage.value = false
 
         val recycler = binding.rvAccountList
         recycler.layoutManager = LinearLayoutManager(requireContext())
 
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+        viewModel.getChartData()
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.monthCount.collectLatest {
                         binding.tvMonthCount.text = "${it}"
@@ -53,7 +63,8 @@ class AccountListFragment : Fragment() {
                 }
                 launch {
                     viewModel.listAccount.collectLatest {
-                        recycler.adapter = MyItemRecyclerViewAdapter(it, findNavController())
+                        binding.rvAccountList.adapter =
+                            MyItemRecyclerViewAdapter(it, findNavController())
                     }
                 }
                 launch {
@@ -61,35 +72,26 @@ class AccountListFragment : Fragment() {
                         setBarChart(it)
                     }
                 }
+                launch {
+                    NotificationRepository.notificationReceived.collectLatest {
+                        viewModel.apply {
+                            getChartData()
+                            fetchFromSeverFast()
+                        }
+                    }
+                }
             }
         }
-    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
         val view = binding.root
         return view
-
-//        val recycler = binding.rvAccountList
-//        recycler.layoutManager = LinearLayoutManager(requireContext())
-//        getAllAccounts { accounts ->
-//            recycler.adapter = MyItemRecyclerViewAdapter(accounts)
-//        }
     }
 
+    // Setting up bar chart
     private fun setBarChart(newEntries: ArrayList<BarEntry>) {
-//        val entries = ArrayList<BarEntry>()
-//        entries.add(BarEntry(0f, 4f))
-//        entries.add(BarEntry(1f, 10f))
-//        entries.add(BarEntry(2f, 30f))
-//        entries.add(BarEntry(3f, 15f))
-//        entries.add(BarEntry(4f, 24f))
-//        entries.add(BarEntry(5f, 50f))
         val entries = newEntries
 
-        val barDataSet = BarDataSet(entries, "Registation")
+        val barDataSet = BarDataSet(entries, "Registration per month")
 
         val labels = ArrayList<String>()
         for (entry in entries) {
@@ -106,38 +108,29 @@ class AccountListFragment : Fragment() {
                 10 -> "OCT"
                 11 -> "NOV"
                 12 -> "DEC"
-                else -> "None"
+                else -> "Error"
             }
 
             labels.add(itemLabel)
         }
-//        labels.add("Sun");
-//        labels.add("Mon");
-//        labels.add("Tue");
-//        labels.add("Wed");
-//        labels.add("Thu");
-//        labels.add("Fri");
-//        labels.add("Sat");
 
         val data = BarData(barDataSet)
-        binding.chartContainer.data = data // set the data and list of lables into chart
+        data.setValueFormatter(IntegerFormatter())
+
+        binding.chartContainer.data = data // set the data and list of labels into chart
+        binding.chartContainer.axisLeft.valueFormatter = IntegerFormatter()
+        binding.chartContainer.axisRight.isEnabled = false
 
         binding.chartContainer.xAxis.valueFormatter = IndexAxisValueFormatter(labels);
         binding.chartContainer.xAxis.position = XAxis.XAxisPosition.BOTTOM
         binding.chartContainer.xAxis.setGranularity(1f);
-        binding.chartContainer.xAxis.setCenterAxisLabels(true);
-
-//        binding.chartContainer.xAxis.setAxisMinimum(data.xMin - .5f)
-//        binding.chartContainer.xAxis.setAxisMaximum(data.xMax + .5f)
-//        binding.chartContainer.xAxis.setLabelCount(12)
-
+        binding.chartContainer.xAxis.setCenterAxisLabels(false);
 
         val description = Description()
         description.text = ""
+        binding.chartContainer.description = description  // set the description
 
-        binding.chartContainer.setDescription(description)  // set the description
-
-        binding.chartContainer.animateY(5000)
+        binding.chartContainer.animateY(1000)
     }
 
     companion object {
@@ -153,6 +146,15 @@ class AccountListFragment : Fragment() {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }
             }
+
+        class IntegerFormatter : ValueFormatter() {
+            private val mFormat = DecimalFormat("###,###,##0")
+
+            override fun getFormattedValue(value: Float): String {
+                return "" + (value.toInt())
+            }
+        }
+
     }
 }
 
