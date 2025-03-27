@@ -1,17 +1,23 @@
 package com.example.smartenroll1.mainScreens.Models
 
+import android.icu.util.Calendar
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.smartenroll1.PaginatedAccountList
 import com.example.smartenroll1.SmartEnrolCaller
+import com.github.mikephil.charting.data.BarEntry
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.ArrayList
+import java.util.GregorianCalendar
 import kotlin.math.ceil
 
 class AccountListViewModel : ViewModel() {
@@ -32,6 +38,9 @@ class AccountListViewModel : ViewModel() {
     private val _pageCount = MutableStateFlow(0)
     val pageCount = _pageNumber.asStateFlow()
 
+    private val _monthEntries = MutableStateFlow<ArrayList<BarEntry>>(arrayListOf())
+    val monthEntries = _monthEntries.asStateFlow()
+
 
     init {
         startPolling()
@@ -51,10 +60,30 @@ class AccountListViewModel : ViewModel() {
                     }
                 )
 
-                getMonthlyRegistration { count ->
-                    _registeredInMonth.value = count
+
+
+                if (isSearchPage.value != false) {
+                    // Get user registration count or previous 5 months
+                    val calendar = GregorianCalendar()
+                    val entries = ArrayList<BarEntry>()
+
+                    for (i in 0..4) {
+                        calendar.add(Calendar.MONTH, if (i > 0) -1 else 0)
+                        val tempMonth = calendar.get(Calendar.MONTH) + 1
+
+                        getMonthlyRegistration(tempMonth) { count ->
+                            if (i == 0) {
+                                _registeredInMonth.value = count
+                            }
+
+                            entries.add(BarEntry(i.toFloat(), count.toFloat(), tempMonth))
+                        }
+                    }
+
+                    _monthEntries.value = entries
                 }
-                delay(20000) // 🔄 Poll every 20 seconds
+
+                delay(5000) // 🔄 Poll every 20 seconds
             }
         }
     }
@@ -89,12 +118,28 @@ class AccountListViewModel : ViewModel() {
             })
     }
 
-    private fun getMonthlyRegistration(count: (Int) -> Unit) {
+    private fun getMonthlyRegistration(month: Int, count: (Int) -> Unit) {
+        when (month) {
+            0 -> count(20)
+            1 -> count(20)
+            2 -> count(46)
+            3 -> count(15)
+            4 -> count(10)
+            5 -> count(25)
+            6 -> count(60)
+            7 -> count(60)
+            8 -> count(55)
+            9 -> count(33)
+            10 -> count(10)
+            11 -> count(0)
+            12 -> count(12)
+        }
+        return
+
         val api = SmartEnrolCaller.getApi()
-        val thisMonth = 3
 
         val response =
-            api.getAccountsByMonth(thisMonth).enqueue(object : Callback<List<AccountItemModel>> {
+            api.getAccountsByMonth(month).enqueue(object : Callback<List<AccountItemModel>> {
                 override fun onResponse(
                     p0: Call<List<AccountItemModel>>,
                     p1: Response<List<AccountItemModel>>

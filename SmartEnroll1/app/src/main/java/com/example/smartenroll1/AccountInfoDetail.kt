@@ -1,5 +1,6 @@
 package com.example.smartenroll1
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.smartenroll1.mainScreens.Models.AccountDetailViewModel
 import com.example.smartenroll1.databinding.FragmentAccountInfoDetailBinding
+import io.data2viz.charts.chart.Chart
+import io.data2viz.charts.chart.chart
+import io.data2viz.charts.chart.discrete
+import io.data2viz.charts.chart.mark.area
+import io.data2viz.charts.chart.quantitative
+import io.data2viz.geom.Size
+import io.data2viz.viz.VizContainerView
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -72,3 +80,4 @@ class AccountInfoDetail : Fragment() {
 
     }
 }
+

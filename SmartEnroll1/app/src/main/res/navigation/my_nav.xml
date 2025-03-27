@@ -41,4 +41,9 @@
         android:name="com.example.smartenroll1.AccountManagement"
         android:label="fragment_account_management"
         tools:layout="@layout/fragment_account_management" />
+    <fragment
+        android:id="@+id/chartFragment"
+        android:name="com.example.smartenroll1.ChartFragment"
+        android:label="fragment_chart"
+        tools:layout="@layout/fragment_chart" />
 </navigation>
