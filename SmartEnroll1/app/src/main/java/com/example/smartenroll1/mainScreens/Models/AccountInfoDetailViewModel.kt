@@ -1,5 +1,6 @@
 package com.example.smartenroll1.mainScreens.Models
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.example.smartenroll1.SmartEnrolCaller
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -8,7 +9,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AccountInfoDetailViewModel : ViewModel() {
+class AccountInfoDetailViewModel() : ViewModel() {
     private val _accountId = MutableStateFlow(-1)
     private val _account = MutableStateFlow<StudentAccountProfileModel?>(null)
     val account = _account.asStateFlow()
@@ -22,7 +23,7 @@ class AccountInfoDetailViewModel : ViewModel() {
     }
 
     private fun fetchDetail(account: (StudentAccountProfileModel) -> Unit) {
-        val api = SmartEnrolCaller.getApi()
+        val api = SmartEnrolCaller.getApi(null)
 
         val response =
             api.getAccountById(_accountId.value).enqueue(object : Callback<GetAccountModel> {

@@ -1,5 +1,6 @@
 package com.example.smartenroll1.mainScreens.Models
 
+import android.content.Context
 import android.icu.util.Calendar
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -8,9 +9,12 @@ import com.example.smartenroll1.PaginatedAccountList
 import com.example.smartenroll1.SmartEnrolCaller
 import com.github.mikephil.charting.data.BarEntry
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,7 +22,7 @@ import java.util.ArrayList
 import java.util.GregorianCalendar
 import kotlin.math.ceil
 
-class AccountListViewModel : ViewModel() {
+class AccountListViewModel() : ViewModel() {
     private val _listAccount = MutableStateFlow<List<AccountItemModel>>(emptyList())
     private val _registeredInMonth = MutableStateFlow(0)
     val isSearchPage = MutableStateFlow(false)
@@ -34,9 +38,13 @@ class AccountListViewModel : ViewModel() {
     private val _pageCount = MutableStateFlow(0)
     val pageCount = _pageNumber.asStateFlow()
 
+    // Chart Data
     private val _monthEntries = MutableStateFlow<ArrayList<BarEntry>>(arrayListOf())
     val monthEntries = _monthEntries.asStateFlow()
 
+    // Temp OkHttpClient
+    private val _client = MutableStateFlow<OkHttpClient?>(null)
+    val tempClient = _client.asStateFlow()
 
     init {
         startPolling()
@@ -58,7 +66,7 @@ class AccountListViewModel : ViewModel() {
         accounts: (List<AccountItemModel>) -> Unit,
         pageCount: (Int) -> Unit
     ) {
-        val api = SmartEnrolCaller.getApi()
+        val api = SmartEnrolCaller.getApi(tempClient.value)
 
         val response = api.getAccountList(name, sortByNewestDate, pageSize, pageNumber)
             .enqueue(object : Callback<PaginatedAccountList> {
@@ -85,7 +93,7 @@ class AccountListViewModel : ViewModel() {
     fun fetchFromSeverFast() {
         viewModelScope.launch {
             try {
-                val api = SmartEnrolCaller.getApi()
+                val api = SmartEnrolCaller.getApi(tempClient.value)
                 val paginatedResult = api.getAccountListSuspend(
                     sortNewestDate = isSearchPage.value,
                     name = filterName.value,
@@ -115,7 +123,7 @@ class AccountListViewModel : ViewModel() {
                     calendar.add(Calendar.MONTH, if (i > 0) -i else 0)
                     val month = calendar.get(Calendar.MONTH) + 1
 
-                    val monthResult = SmartEnrolCaller.getApi().getByMonthSimple(month)
+                    val monthResult = SmartEnrolCaller.getApi(tempClient.value).getByMonthSimple(month)
 
                     if (monthResult.isNotEmpty()) {
                         val monthCount = monthResult.count()

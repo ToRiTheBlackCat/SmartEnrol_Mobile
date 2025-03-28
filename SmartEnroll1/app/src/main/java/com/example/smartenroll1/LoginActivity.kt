@@ -50,7 +50,9 @@ class LoginActivity : AppCompatActivity() {
 
     private val TAG: String = "CHECK_RESPONSE"
     private fun loginAccount() {
-        val api = SmartEnrolCaller.getApi()
+        val api = SmartEnrolCaller
+            .getApi(SmartEnrolCaller
+            .provideOkHttpClient(applicationContext))
 
         val loginRequest = LoginRequest(
             binding.etAcount.text.toString(),
@@ -66,6 +68,11 @@ class LoginActivity : AppCompatActivity() {
 
                     val tokenManager = TokenManager(applicationContext)
                     tokenManager.saveToken(token)
+
+                    val intent = Intent(applicationContext, MainActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
+                    applicationContext.startActivity(intent)
                 }
             }
 
@@ -123,6 +130,4 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
-
-
 }

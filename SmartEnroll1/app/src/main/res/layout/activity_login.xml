@@ -79,7 +79,7 @@
         android:background="#FBFBFB"
         android:ems="10"
         android:hint="Password"
-        android:inputType="text"
+        android:inputType="text|textPassword"
         android:padding="2sp"
         android:textAlignment="viewStart"
         app:layout_constraintStart_toStartOf="@+id/tvAccount"
