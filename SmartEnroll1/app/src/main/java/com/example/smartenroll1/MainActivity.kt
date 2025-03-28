@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.miHome -> setCurrentFragment(R.id.accountManagementNav)
 //                R.id.miChat -> setCurrentFragment(R.id.chatFragment)
                 R.id.miDash -> setCurrentFragment(R.id.infoFragmentNav)
-                R.id.miGraph -> navController.navigate(R.id.chartFragment)
+//                R.id.miGraph -> navController.navigate(R.id.chartFragment)
             }
             true
         }
