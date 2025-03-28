@@ -19,6 +19,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.smartenroll1.databinding.ActivityLoginBinding
 import com.example.smartenroll1.databinding.FragmentHomeBinding
 import android.Manifest
+import com.example.smartenroll1.managers.TokenManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,14 +48,9 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private val BASE_URL = "https://smartenrol.azurewebsites.net/api/"
     private val TAG: String = "CHECK_RESPONSE"
-    fun loginAccount() {
-        val api = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(SmartEnrolApi::class.java)
+    private fun loginAccount() {
+        val api = SmartEnrolCaller.getApi()
 
         val loginRequest = LoginRequest(
             binding.etAcount.text.toString(),
@@ -66,7 +62,10 @@ class LoginActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     Log.i(TAG, "UserId: ${response.body()?.accountId}")
                     Log.i(TAG, "Token: ${response.body()?.token}")
-                    TOKEN = response.body()?.token ?: ""
+                    val token = response.body()?.token ?: ""
+
+                    val tokenManager = TokenManager(applicationContext)
+                    tokenManager.saveToken(token)
                 }
             }
 
@@ -76,38 +75,6 @@ class LoginActivity : AppCompatActivity() {
 
         })
     }
-
-    private lateinit var TOKEN: String
-    fun testWeather() {
-        val api = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(SmartEnrolApi::class.java)
-
-        api.getWeatherForecast(TOKEN).enqueue(object : Callback<List<WeatherResponse>> {
-            override fun onResponse(
-                call: Call<List<WeatherResponse>>,
-                response: Response<List<WeatherResponse>>
-            ) {
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        for (weather in it) {
-                            Log.i(TAG, "Weather: ${weather}")
-                        }
-                    }
-
-                }
-            }
-
-            override fun onFailure(call: Call<List<WeatherResponse>>, throwable: Throwable) {
-                Log.i(TAG, "Get call failed.")
-            }
-
-
-        })
-    }
-
 
     private val CHANNEL_ID: String = "all_notifications"
     private val NOTIFICATION_ID: Int = 1

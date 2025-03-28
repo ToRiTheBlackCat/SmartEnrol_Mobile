@@ -1,4 +1,4 @@
-package com.example.smartenroll1.mainScreens
+package com.example.smartenroll1
 
 import android.icu.text.DecimalFormat
 import android.os.Bundle
@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.smartenroll1.databinding.FragmentInfoBinding
 import com.example.smartenroll1.mainScreens.Models.AccountListViewModel
+import com.example.smartenroll1.mainScreens.MyItemRecyclerViewAdapter
 import com.example.smartenroll1.mainScreens.Singleton.NotificationRepository
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
@@ -76,7 +77,6 @@ class AccountListFragment : Fragment() {
                     NotificationRepository.notificationReceived.collectLatest {
                         viewModel.apply {
                             getChartData()
-                            fetchFromSeverFast()
                         }
                     }
                 }

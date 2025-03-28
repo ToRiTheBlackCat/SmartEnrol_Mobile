@@ -31,8 +31,6 @@ class AccountListViewModel : ViewModel() {
     private val _pageNumber = MutableStateFlow(1)
     val pageNumber = _pageNumber.asStateFlow()
     private val _pageSize = MutableStateFlow(10)
-    val pageSize = _pageNumber.asStateFlow()
-
     private val _pageCount = MutableStateFlow(0)
     val pageCount = _pageNumber.asStateFlow()
 
@@ -49,7 +47,7 @@ class AccountListViewModel : ViewModel() {
             while (true) {
                 fetchFromSeverFast()
 
-                delay(5000) // 🔄 Poll every 20 seconds
+                delay(5000) // 🔄 Poll every 5 seconds
             }
         }
     }
@@ -134,7 +132,8 @@ class AccountListViewModel : ViewModel() {
                     }
                 }
 
-                _monthEntries.value = entries
+                if (entries.isNotEmpty())
+                    _monthEntries.value = entries
             }
         } catch (e: Exception) {
             e.printStackTrace()  // Handle error

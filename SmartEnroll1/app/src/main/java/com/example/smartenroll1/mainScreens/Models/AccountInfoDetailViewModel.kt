@@ -8,7 +8,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AccountDetailViewModel : ViewModel() {
+class AccountInfoDetailViewModel : ViewModel() {
     private val _accountId = MutableStateFlow(-1)
     private val _account = MutableStateFlow<StudentAccountProfileModel?>(null)
     val account = _account.asStateFlow()

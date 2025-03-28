@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".mainScreens.AccountListFragment"
+    tools:context=".AccountListFragment"
     android:name="com.example.smartenroll1.mainScreens.AccountListFragment">
 
     <androidx.cardview.widget.CardView

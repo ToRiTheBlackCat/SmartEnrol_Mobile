@@ -22,12 +22,12 @@
         tools:layout="@layout/fragment_chat" />
     <fragment
         android:id="@+id/infoFragmentNav"
-        android:name="com.example.smartenroll1.mainScreens.AccountListFragment"
+        android:name="com.example.smartenroll1.AccountListFragment"
         android:label="account_info_list"
         tools:layout="@layout/fragment_info" />
     <fragment
         android:id="@+id/accountInfoDetail"
-        android:name="com.example.smartenroll1.AccountInfoDetail"
+        android:name="com.example.smartenroll1.AccountInfoDetailFragment"
         android:label="fragment_account_info_detail"
         tools:layout="@layout/fragment_account_info_detail" >
         <action
