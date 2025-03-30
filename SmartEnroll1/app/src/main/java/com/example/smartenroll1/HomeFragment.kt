@@ -7,18 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.core.widget.doOnTextChanged
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.example.smartenroll1.databinding.ActivityMainBinding
 import com.example.smartenroll1.databinding.FragmentHomeBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import kotlin.math.log
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,9 +66,9 @@ class HomeFragment : Fragment() {
         val selectedPage = when (pageText) {
             pageStrings[0] -> R.id.homeFragment
             pageStrings[1] -> R.id.chatFragment
-            pageStrings[2] -> R.id.infoFragment
+            pageStrings[2] -> R.id.infoFragmentNav
             pageStrings[3] -> R.id.homeFragment
-            pageStrings[4] -> R.id.infoFragment
+            pageStrings[4] -> R.id.infoFragmentNav
 
             else -> return
         }

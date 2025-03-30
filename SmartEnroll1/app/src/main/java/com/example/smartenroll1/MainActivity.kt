@@ -3,11 +3,9 @@ package com.example.smartenroll1
 import android.content.pm.PackageManager
 import android.Manifest
 import android.os.Build
-import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -18,6 +16,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.smartenroll1.databinding.ActivityMainBinding
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -33,27 +34,24 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
         setContentView(binding.root)
-
-        val firstFragment = HomeFragment()
-        val secondFragment = ChatFragment()
-//        val thirdFragment = AccountFragment()
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nvfFragment) as NavHostFragment
         navController = navHostFragment.findNavController()
 
-        setCurrentFragment(R.id.homeFragment)
+        setCurrentFragment(R.id.infoFragmentNav)
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.miHome -> setCurrentFragment(R.id.homeFragment)
-                R.id.miChat -> setCurrentFragment(R.id.chatFragment)
-//                R.id.miAccount -> setCurrentFragment(R.id.accountFragment)
-                R.id.miDash -> setCurrentFragment(R.id.infoFragment)
+//                R.id.miHome -> setCurrentFragment(R.id.homeFragment)
+                R.id.miHome -> setCurrentFragment(R.id.accountManagementNav)
+//                R.id.miChat -> setCurrentFragment(R.id.chatFragment)
+                R.id.miDash -> setCurrentFragment(R.id.infoFragmentNav)
+//                R.id.miGraph -> navController.navigate(R.id.chartFragment)
             }
             true
         }
@@ -62,9 +60,6 @@ class MainActivity : AppCompatActivity() {
     private fun setCurrentFragment(actionId: Int) {
         navController.navigate(actionId)
     }
-
-
-
 
     private fun requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -95,3 +90,4 @@ class MainActivity : AppCompatActivity() {
             }
     }
 }
+

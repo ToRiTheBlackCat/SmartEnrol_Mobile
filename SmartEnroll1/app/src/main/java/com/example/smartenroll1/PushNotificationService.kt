@@ -3,6 +3,7 @@ package com.example.smartenroll1
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
+import com.example.smartenroll1.mainScreens.Singleton.NotificationRepository
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -19,6 +20,7 @@ class PushNotificationService : FirebaseMessagingService() {
         // Respond to received message
         message.notification?.body?.let { messageBody ->
             showToast(messageBody)
+            NotificationRepository.setNotificationReceived(messageBody)
         }
     }
 

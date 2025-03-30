@@ -1,6 +1,5 @@
-package com.example.smartenroll1.MainScreens
+package com.example.smartenroll1.mainScreens
 
-import android.content.Context
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -9,7 +8,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
-import com.example.smartenroll1.MainScreens.Models.AccountItemModel
+import com.example.smartenroll1.mainScreens.Models.AccountItemModel
 
 import com.example.smartenroll1.R
 import com.example.smartenroll1.databinding.AccountInfoBinding
@@ -18,7 +17,7 @@ import java.util.Locale
 class MyItemRecyclerViewAdapter(
     private val values: List<AccountItemModel>,
     private val navController: NavController,
-    private val fragmentContext: AccountListFragment
+//    private val fragmentContext: Context
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.AccountInfoHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountInfoHolder {

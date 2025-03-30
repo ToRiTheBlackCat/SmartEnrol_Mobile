@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout3"
+    android:id="@+id/infoFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainScreens.AccountListFragment">
+    tools:context=".AccountListFragment"
+    android:name="com.example.smartenroll1.mainScreens.AccountListFragment">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -14,7 +15,7 @@
         android:layout_weight="1"
         android:elevation="16dp"
         app:cardBackgroundColor="#EF9A40"
-        app:cardCornerRadius="16dp">
+        app:cardCornerRadius="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -42,41 +43,48 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/analytics_ic"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
-
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="24dp"
-                android:text="User registered (month)"
-                android:textSize="20sp"
+                android:text="User registered this month"
+                android:textColor="#000000"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView3"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView17"
+                app:layout_constraintStart_toEndOf="@+id/tvMonthCount"
                 app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
             <TextView
-                android:id="@+id/textView17"
+                android:id="@+id/tvMonthCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="999"
-                android:textSize="20sp"
+                android:textColor="#000000"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView3"
                 app:layout_constraintStart_toEndOf="@+id/imageView3"
                 app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/chartContainer"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView3">
+
+            </com.github.mikephil.charting.charts.BarChart>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
@@ -86,9 +94,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_weight="2"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_weight="2.2"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <TextView
@@ -96,13 +107,15 @@
             android:layout_height="wrap_content"
             android:text="Recently registered"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="#000000"
             android:textSize="24sp"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvAccountList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             tools:listitem="@layout/account_info" />
     </LinearLayout>
 

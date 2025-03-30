@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 
     // Add the Google services Gradle plugin
-    id("com.google.gms.google-services") version "4.4.2"
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -19,6 +19,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Required when setting minSdkVersion to 20 or lower
+        multiDexEnabled = true
     }
 
     buildTypes {
@@ -64,12 +67,16 @@ dependencies {
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.fragment.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+
+    implementation("androidx.security:security-crypto:1.0.0")
     // retrofit
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.11.0")
 
@@ -97,4 +104,10 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment:2.8.8")
     implementation("androidx.navigation:navigation-ui:2.8.8")
 
+
+    implementation("io.data2viz.charts:core:1.1.0-eap1")
+    implementation("io.data2viz.d2v:viz:0.8.12")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
+
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }

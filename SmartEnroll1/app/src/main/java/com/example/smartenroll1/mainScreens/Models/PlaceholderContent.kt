@@ -1,4 +1,4 @@
-package com.example.smartenroll1.MainScreens.Models
+package com.example.smartenroll1.mainScreens.Models
 
 import java.util.ArrayList
 import java.util.HashMap
